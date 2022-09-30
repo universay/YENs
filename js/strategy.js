@@ -27,16 +27,16 @@ var nuko = {
   balanceContractYEN: null,
   balanceContractJPYC: null,
   swapContract: [],
-  swapMaxYEN: 10000,
-  swapMinYEN: 1000,
-  swapMaxJPYC: 100,
+  swapMaxYEN: 1000,
+  swapMinYEN: 10,
+  swapMaxJPYC: 1000,
   swapMinJPYC: 10,
   swapSlippage: [0.006, 0.0075],
   swapGasMax: 300,
   swapLog: [],
   swapMaxLog: 100,
-  upperThreshold: 117.9,
-  lowerThreshold: 115.9,
+  upperThreshold: 1.01,
+  lowerThreshold: 0.99,
   target: 0,
   spread: 2,
   jpyusd: 100,
@@ -62,20 +62,20 @@ const NODE_URL = [
 ];
 
 const contractAddress = {
-  YEN: "0x6ae7dfc73e0dde2aa99ac063dcf7e8a63265108c",
-  JPYC: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+  YEN: "0xa874a3082d232e517654da2ce89374d556d339c4",
+  JPYC: "0x431d5dff03120afa4bdf332c61a6e1766ef37bdb",
   MATIC: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
   routerQuick: "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff",
-  pairQuick: "0x205995421C72Dc223F36BbFad78B66EEa72d2677",
+  pairQuick: "0x9cc4f1cf73b929978ea8f84a50d2674aab000923",
   routerSushi: "0x1b02da8cb0d097eb8d57a175b88c7d8b47997506",
-  pairSushi: "0xfbae8e2d04a67c10047d83ee9b8aeffe7f6ea3f4",
-  pairMATIC_YEN: "0x7105f0e4a000fae92b1299734b18e7d375968371",
-  pairMATIC_JPYC: "0x6e7a5fafcec6bb1e78bae2a1f0b612012bf14827",
+  pairSushi: "0x34ace772625b678dde5a388eb1b23273ac0820f4",
+  pairMATIC_YEN: "0xad4fea180e2efb6405097b3efb880106c273e40f",
+  pairMATIC_JPYC: "0x85ee8f07dd203786401066b36f6fa7bac505ecab",
 };
 
 const decimal = {
   YEN: 18,
-  JPYC: 6,
+  JPYC: 18,
   MATIC: 18,
 };
 
