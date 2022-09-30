@@ -292,7 +292,8 @@ const watchRate = async () => {
     // QuickSwapとSushiSwapの両方がtrigerされる場合にトライする順番をランダム化する
     let array = [0, 1];
     if (Math.random() > 0.5) {
-      array = array.reverse();
+      array = array;
+      //array = array.reverse();
     }
     array.forEach((i) => {
       if (
@@ -357,7 +358,7 @@ const getRate = async () => {
       .getReserves()
       .call()
       .then((values) => {
-        nuko.rateReserveJPYC[i] = values[0] / 10 ** 6;
+        nuko.rateReserveJPYC[i] = values[0] / 10 ** 18;
         nuko.rateReserveYEN[i] = values[1] / 10 ** 18;
         nuko.rateRaw[i] = nuko.rateReserveYEN[i] / nuko.rateReserveJPYC[i];
         nuko.rate[i] =
@@ -753,8 +754,8 @@ const updateLiquidity = () => {
   $("#quickLiquidity").text(
     "$" +
       (
-        nuko.rateReserveJPYC[0] +
-        nuko.rateReserveYEN[0] / nuko.rate[0]
+        (nuko.rateReserveJPYC[0] +
+        nuko.rateReserveYEN[0]) / nuko.rate[0]
       ).toLocaleString(undefined, {
         maximumFractionDigits: 0,
       })
@@ -773,8 +774,8 @@ const updateLiquidity = () => {
   $("#sushiLiquidity").text(
     "$" +
       (
-        nuko.rateReserveJPYC[1] +
-        nuko.rateReserveYEN[1] / nuko.rate[1]
+        (nuko.rateReserveJPYC[1] +
+        nuko.rateReserveYEN[1]) / nuko.rate[1]
       ).toLocaleString(undefined, {
         maximumFractionDigits: 0,
       })
