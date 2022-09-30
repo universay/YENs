@@ -256,7 +256,7 @@
    );
    $("#communityBalanceJPYC").text(
      json.jpycNum.toLocaleString(undefined, {
-       maximumFractionDigits: 2,
+       maximumFractionDigits: 0,
      })
    );
  
@@ -267,7 +267,7 @@
    );
    $("#communityBalanceJPYC2").text(
      json.jpycNum.toLocaleString(undefined, {
-       maximumFractionDigits: 2,
+       maximumFractionDigits: 0,
      })
    );
  
