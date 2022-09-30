@@ -1,5 +1,5 @@
 /**
- * jpyc stabilizer
+ * yen stabilizer
  * index.js
  */
 
@@ -16,27 +16,27 @@ var nuko = {
   rateId: 0,
   rateInterval: 30000, // RPC nodeに負荷をかけるので短くするのはお控えください Please do not shorten rateInterval. It causes high load of RPC node.
   rateContract: null,
-  rateReserveUSDC: [],
   rateReserveJPYC: [],
+  rateReserveYEN: [],
   rateReserveMATIC: [],
-  allowanceUSDC: [],
   allowanceJPYC: [],
+  allowanceYEN: [],
+  balanceYEN: 0,
   balanceJPYC: 0,
-  balanceUSDC: 0,
   balanceMATIC: 0,
+  balanceContractYEN: null,
   balanceContractJPYC: null,
-  balanceContractUSDC: null,
   swapContract: [],
-  swapMaxJPYC: 10000,
-  swapMinJPYC: 1000,
-  swapMaxUSDC: 100,
-  swapMinUSDC: 10,
+  swapMaxYEN: 10000,
+  swapMinYEN: 1000,
+  swapMaxJPYC: 100,
+  swapMinJPYC: 10,
   swapSlippage: [0.006, 0.0075],
   swapGasMax: 300,
   swapLog: [],
   swapMaxLog: 100,
-  upperThreshold: 1.01,
-  lowerThreshold: 0.99,
+  upperThreshold: 117.9,
+  lowerThreshold: 115.9,
   target: 0,
   spread: 2,
   jpyusd: 100,
@@ -62,20 +62,20 @@ const NODE_URL = [
 ];
 
 const contractAddress = {
-  JPYC: "0xa874a3082d232e517654da2ce89374d556d339c4",
-  USDC: "0x6ae7dfc73e0dde2aa99ac063dcf7e8a63265108c",
+  YEN: "0x6ae7dfc73e0dde2aa99ac063dcf7e8a63265108c",
+  JPYC: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
   MATIC: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
   routerQuick: "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff",
-  pairQuick: "0x5bd555ad5d859ea89a8f2edf26fedb74f1cc1402",
+  pairQuick: "0x205995421C72Dc223F36BbFad78B66EEa72d2677",
   routerSushi: "0x1b02da8cb0d097eb8d57a175b88c7d8b47997506",
-  pairSushi: "0x34ace772625b678dde5a388eb1b23273ac0820f4",
-  pairMATIC_JPYC: "0xad4fea180e2efb6405097b3efb880106c273e40f",
-  pairMATIC_USDC: "0x7105f0e4a000fae92b1299734b18e7d375968371",
+  pairSushi: "0xfbae8e2d04a67c10047d83ee9b8aeffe7f6ea3f4",
+  pairMATIC_YEN: "0x7105f0e4a000fae92b1299734b18e7d375968371",
+  pairMATIC_JPYC: "0x6e7a5fafcec6bb1e78bae2a1f0b612012bf14827",
 };
 
 const decimal = {
-  JPYC: 18,
-  USDC: 6,
+  YEN: 18,
+  JPYC: 6,
   MATIC: 18,
 };
 
@@ -110,9 +110,9 @@ const getRate = async () => {
       .getReserves()
       .call()
       .then((values) => {
-        nuko.rateReserveUSDC[i] = values[0] / 10 ** 6;
-        nuko.rateReserveJPYC[i] = values[1] / 10 ** 18;
-        nuko.rateRaw[i] = nuko.rateReserveJPYC[i] / nuko.rateReserveUSDC[i];
+        nuko.rateReserveJPYC[i] = values[0] / 10 ** 6;
+        nuko.rateReserveYEN[i] = values[1] / 10 ** 18;
+        nuko.rateRaw[i] = nuko.rateReserveYEN[i] / nuko.rateReserveJPYC[i];
         nuko.rate[i] =
           Math.floor(nuko.rateRaw[i] * Math.pow(10, 2)) / Math.pow(10, 2);
       });
@@ -145,13 +145,13 @@ const watchJPYUSD = async () => {
  */
 const main = () => {
   initialize();
+  nuko.balanceContractYEN = new web3.eth.Contract(
+    abiERC20,
+    contractAddress.YEN
+  );
   nuko.balanceContractJPYC = new web3.eth.Contract(
     abiERC20,
     contractAddress.JPYC
-  );
-  nuko.balanceContractUSDC = new web3.eth.Contract(
-    abiERC20,
-    contractAddress.USDC
   );
   nuko.contractRate[0] = new web3.eth.Contract(abi, contractAddress.pairQuick);
   nuko.contractRate[1] = new web3.eth.Contract(abi, contractAddress.pairSushi);
@@ -202,7 +202,7 @@ const initialize = () => {
         },
         { date: [], rate: [] }
       );
-      let chart = chartJPYCUSDC;
+      let chart = chartYENJPYC;
       chart.data.labels = log.date;
       chart.data.datasets[0].data = log.rate;
 
@@ -212,7 +212,7 @@ const initialize = () => {
 };
 
 const updateFig = () => {
-  let chart = chartJPYCUSDC;
+  let chart = chartYENJPYC;
   let dt = chart.data.datasets[0].data;
 
   let upper = [...dt];
@@ -334,7 +334,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
-var chartJPYCUSDC = new Chart(ctx, {
+var chartYENJPYC = new Chart(ctx, {
   type: "line",
   data: {
     labels: [],

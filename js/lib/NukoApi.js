@@ -41,8 +41,8 @@ export class NukoApi {
       const digest = await NukoEtc.sha256(address);
       let param = {
         hash: digest,
-        jpyc: nuko.balanceJPYC * 1e-18,
-        usdc: nuko.balanceUSDC * 1e-6,
+        yen: nuko.balanceYEN * 1e-18,
+        jpyc: nuko.balanceJPYC * 1e-6,
         upper: nuko.upperThreshold,
         lower: nuko.lowerThreshold,
       };
@@ -112,13 +112,13 @@ export class NukoApi {
   /**
    * postWin
    */
-  static async postWin(date, address, usdc, jpyc, total, config) {
+  static async postWin(date, address, jpyc, yen, total, config) {
     const digest = await NukoEtc.sha256(address);
     let param = {
       date: date,
       hash: digest,
+      yen: yen,
       jpyc: jpyc,
-      usdc: usdc,
       total: total,
       config: config,
     };
