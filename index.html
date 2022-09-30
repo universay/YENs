@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="universay" />
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+    <title>YEN Stabilizer - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link
+      href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W62M4XNEVJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-W62M4XNEVJ');
+    </script>
+  </head>
+
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <ul
+        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        id="accordionSidebar"
+      >
+        <!-- Sidebar - Brand -->
+        
+        <a
+          class="sidebar-brand d-flex align-items-center justify-content-center"
+          href="index.html"
+        >
+          <div class="sidebar-brand-icon">
+            <img src="img/YEN.png" width="45px" /></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">YEN stabilizer</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0" />
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="strategy.html" target="_blank">
+            <i class="fas fa-fw fa-chess-rook"></i>
+            <span>Strategy</span>
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="leaderboard.html" target="_blank">
+            <i class="fas fa-fw fa-cat"></i>
+            <span>Leaderboard</span>
+          </a>
+        </li>
+
+        <hr class="sidebar-divider" />
+        <div class="sidebar-heading">References</div>
+        <li class="nav-item">
+          <a class="nav-link" href="https://hide.ac/articles/ZZoaKG4yb" target="_blank">
+            <i class="fas fa-book-open"></i>
+            <span>Guide</span>
+          </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
+
+        <!-- Heading -->
+        <div class="sidebar-heading">Links</div>
+
+
+        <!-- Nav Item -->
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/universay/YENstabilizer" target="_blank">
+            <i class="fab fa-github"></i>
+            <span>GitHub</span></a
+          >
+        </li>
+
+        <!-- Nav Item -->
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/babyunibabu" target="_blank">
+            <i class="fab fa-twitter"></i>
+            <span>@babyunibabu</span></a
+          >
+        </li>
+
+        <!-- Nav Item -->
+        <li class="nav-item">
+          <a class="nav-link" href="https://info.quickswap.exchange/#/pair/0x9cc4f1cf73b929978ea8f84a50d2674aab000923" target="_blank">
+            <i class="fas fa-exchange-alt"></i>
+            <span>QuickSwap JPYC-YEN</span></a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="https://info.quickswap.exchange/#/pair/0x5337390b2017bfd81cae09913433f959b51f96a6" target="_blank">
+            <i class="fas fa-exchange-alt"></i>
+            <span>QuickSwap MATIC-YEN</span></a
+          >
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/universay/YENstabilizer/releases/" target="_blank">
+            <i class="fas fa-code-branch"></i>
+            <span id="versionText2">v. xxxx.0</span></a
+          >
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block" />
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+       
+      </ul>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <nav
+            class="
+              navbar navbar-expand navbar-light
+              bg-white
+              topbar
+              mb-4
+              static-top
+              shadow
+            "
+          >
+            <!-- Sidebar Toggle (Topbar) -->
+            <button
+              id="sidebarToggleTop"
+              class="btn btn-link d-md-none rounded-circle mr-3"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Top bar Info -->
+
+            <div>
+                <a href="./strategy.html" class="btn btn-success btn-icon-split btn-sm mx-2" target="_blank">
+                    <span class="icon text-white-50">
+                        <img src="img/jpyc.png" width="20px" /></i>
+                    </span>
+                    <span class="text" id="rate"></span>
+                    <span class="icon text-white-50">
+                        <img src="img/YEN.png" width="20px" /></i>
+                    </span>
+                </a>
+            </div>
+
+            <div>
+              <div class="dropdown btn-group">
+                <a href="#" class="btn btn-warning btn-icon-split btn-sm mx-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-gas-pump"></i>
+                    </span>
+                    <span class="text" id="gasPrice">gwei</span>
+                    
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#" id="gasFastest">fastest</a>
+                  <a class="dropdown-item" href="#" id="gasFaster">faster</a>
+                  <a class="dropdown-item" href="#" id="gasFast">fast</a>
+                  <a class="dropdown-item" href="#" id="gasStandard">standard</a>
+                  
+                  <a class="dropdown-item" href="#" id="gasSafeLow">safelow</a>
+                  
+                </div>
+              </div>
+            </div>
+
+            <div>
+                <a href="#" class="btn btn-primary btn-icon-split btn-sm mx-2">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-dollar-sign"></i>
+                    </span>
+                    <span class="text" id="jpyusd">100</span>
+                    <span class="icon text-white-50">
+                        <i class="fas fa-yen-sign"></i>
+                    </span>
+                </a>
+            </div>
+
+            <!-- Active Users -->
+            <div>
+                <a href="./leaderboard.html" target="_blank" class="btn btn-info btn-icon-split btn-sm mx-2">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-users"></i>
+                    </span>
+                    <span class="text" id="activeUsers">0</span>
+                    
+                </a>
+            </div>
+
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span id="wallet" class="mr-2 d-none d-lg-inline text-gray-600 small"
+                    >Create or Import Wallet</span
+                  >
+                  <i class="fas fa-user-alt-slash" id="accountIcon"></i>
+                </a>
+                <!-- Dropdown - User Information -->
+                <div
+                  class="
+                    dropdown-menu dropdown-menu-right
+                    shadow
+                    animated--grow-in
+                  "
+                  aria-labelledby="userDropdown"
+                >
+                  <a class="dropdown-item" href="#" id="createWallet">
+                    <i class="fas fa-plus-circle fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Create Wallet
+                  </a>
+                  <a class="dropdown-item" href="#" id="importWallet">
+                    <i class="fas fa-file-import fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Import Wallet
+                  </a>
+                  <a class="dropdown-item" href="#" id="showWallet">
+                    <i class="fas fa-eye fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Show Wallet
+                  </a>
+                  <a class="dropdown-item" href="#" id="approveCoins" data-toggle="modal" data-target="#modalApprove">
+                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Approve Coins
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" id="options" data-toggle="modal" data-target="#modalOption">
+                    <i class="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Options
+                  </a>
+                  <a class="dropdown-item" href="#" id="autoswapMatic" data-toggle="modal" data-target="#modalAutoswapMatic">
+                    <i class="fas fa-gas-pump fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Autoswap Matic
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-toggle="modal"
+                    data-target="#logoutModal"
+                  >
+                    <i
+                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                    ></i>
+                    Clear Wallet
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid" id="containerBody">
+            <!-- Page Heading -->
+
+            <div id="alert"></div>
+
+
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+
+
+
+
+              <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+
+
+
+              <div class="text-right">
+
+                <!-- strategy
+                <div class="dropdown btn-group">
+                  <a href="#" class="btn btn-success btn-icon-split btn-sm mx-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="icon text-white-50">
+                          <i class="fas fa-chess-rook"></i>
+                      </span>
+                      <span class="text" id="gasPrice">strategy</span>
+                      
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#" id="gasFastest">fixed rate</a>
+                    <a class="dropdown-item" href="#" id="gasFaster">faster</a>
+                    <a class="dropdown-item" href="#" id="gasFast">fast</a>
+                    <a class="dropdown-item" href="#" id="gasStandard">standard</a>
+                    
+                    <a class="dropdown-item" href="#" id="gasSafeLow">safeLow</a>
+                    
+                  </div>
+                </div> -->
+
+                <!-- upper and lower limit -->
+                  <a href="#" class="btn btn-secondary btn-icon-split btn-sm " data-toggle="modal" data-target="#modalOption">
+                      <span class="icon text-white-50">
+                          <i class="fas fa-angle-double-up"></i>
+                      </span>
+                      <span class="text" id="upperLimit">1.01</span>
+                  </a>
+                  <a href="#" class="btn btn-secondary btn-icon-split btn-sm" data-toggle="modal" data-target="#modalOption">
+                      <span class="icon text-white-50">
+                          <i class="fas fa-angle-double-down"></i>
+                      </span>
+                      <span class="text" id="lowerLimit">0.99</span>
+                  </a>
+              
+
+
+              <input type="checkbox" data-toggle="toggle" data-onstyle="danger" id="swapSwitch">
+              
+              </div>
+            </div>
+
+            <!-- Content Row -->
+            <div class="row">
+              <!-- YEN Card -->
+              <div class="col-xl-4 col-md-4 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="
+                            text-xs
+                            font-weight-bold
+                            text-primary text-uppercase
+                            mb-1
+                          "
+                        >
+                          YEN 
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <span id="balanceYEN">0.0</span>/<small><span id="communityBalanceYEN">0.0</span></small>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <img src="img/YEN.png" width="48px"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- JPYC Card -->
+              <div class="col-xl-4 col-md-4 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="
+                            text-xs
+                            font-weight-bold
+                            text-success text-uppercase
+                            mb-1
+                          "
+                        >
+                          JPYC
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <span id="balanceJPYC">0.0</span>/<small><span id="communityBalanceJPYC">0.0</span></small>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <img src="img/jpyc.png" width="48px"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MATIC Card -->
+              <div class="col-xl-4 col-md-4 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="
+                            text-xs
+                            font-weight-bold
+                            text-info text-uppercase
+                            mb-1
+                          "
+                        >
+                          MATIC
+                        </div>
+                        <div class="row no-gutters align-items-center">
+                          <div class="col-auto">
+                            <div
+                              class="
+                                h5
+                                mb-0
+                                mr-3
+                                font-weight-bold
+                                text-gray-800
+                              "
+                            >
+                              <span id="balanceMATIC">0.0</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <img src="img/MATIC.svg" width="48px"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Row -->
+
+            <div class="row">
+
+
+              <!-- Area Chart -->
+              <div class="col-xl-9 col-lg-9">
+                <div class="card shadow mb-4">
+                  <!-- Card Header - Dropdown -->
+                  <div
+                    class="
+                      card-header
+                      py-3
+                      d-flex
+                      flex-row
+                      align-items-center
+                      justify-content-between
+                    "
+                  >
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      Chart
+                    </h6>
+                    
+                  </div>
+                  <!-- Card Body -->
+                  <div class="card-body">
+                    <div class="chart-area">
+                      <canvas id="myAreaChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Donut Chart -->
+              <div class="col-xl-3 col-lg-3">
+                  <div class="card shadow mb-4">
+                      <!-- Card Header - Dropdown -->
+                      <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">Community Balance</h6>
+                      </div>
+                      <!-- Card Body -->
+                      <div class="card-body">
+                          <div class="chart-pie pt-4">
+                              <canvas id="myPieChart"></canvas>
+                          </div>
+                          <div class="text-center">
+                            <small><span id="communityBalanceYEN2">222</span> YEN / <span id="communityBalanceJPYC2">222</span> MATIC</small>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <!-- Activity Log -->
+              <div class="col-xl-12 col-lg-12">
+                  <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">Activity Log</h6>
+                      </div>
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                  <thead>
+                                      <tr>
+                                          <th>DateTime</th>
+                                          <th>from</th>
+                                          <th>to</th>
+                                          <th>rate</th>
+                                          <th>amountIn</th>
+                                          <th>amountOutMin</th>
+                                          <th>gas</th>
+                                          <th>TX</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="row">
+
+              <!-- Activity Log -->
+              <div class="col-xl-6 col-lg-6">
+                  <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">QuickSwap Pool Liquidity <a href="https://info.quickswap.exchange/#/token/0xa874a3082d232e517654da2ce89374d556d339c4" target="_blank"><i class="fas fa-external-link-alt"></i></a></h6>
+                      </div>
+                      <div class="card-body">
+                        
+
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <row>
+                          <div
+                            class="
+                              text-xs
+                              font-weight-bold
+                              text-info text-uppercase
+                              mb-1
+                            "
+                          >
+                            Liquidity
+                          </div>
+                          <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                              <div
+                                class="
+                                  h5
+                                  mb-0
+                                  mr-3
+                                  font-weight-bold
+                                  text-gray-800
+                                "
+                              >
+                                <span id="quickLiquidity">0.0</span>
+                              </div>
+                            </div>
+                          </div>
+                                                    <div
+                            class="
+                              text-xs
+                              font-weight-bold
+                              text-info text-uppercase
+                              mb-1
+                            "
+                          >
+                            JPYC
+                          </div>
+                          <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                              <div
+                                class="
+                                  h5
+                                  mb-0
+                                  mr-3
+                                  font-weight-bold
+                                  text-gray-800
+                                "
+                              >
+                                <span id="quickJPYC">0.0</span>
+                              </div>
+                            </div>
+                          </div>
+                                                    <div
+                            class="
+                              text-xs
+                              font-weight-bold
+                              text-info text-uppercase
+                              mb-1
+                            "
+                          >
+                            YEN
+                          </div>
+                          <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                              <div
+                                class="
+                                  h5
+                                  mb-0
+                                  mr-3
+                                  font-weight-bold
+                                  text-gray-800
+                                "
+                              >
+                                <span id="quickYEN">0.0</span>
+                              </div>
+                            </div>
+                          </div>
+                          </row>
+                        </div>
+                        <div class="col-auto">
+                          <div>
+                            <img src="img/quickswap.png" width="48px"/></div>
+                          <div class="text-center"><a href="https://quickswap.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0x6ae7dfc73e0dde2aa99ac063dcf7e8a63265108c" target="_blank">add</a></div>
+                        </div>
+                      </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Activity Log -->
+              <div class="col-xl-6 col-lg-6">
+                  <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">SushiSwap Pool Liquidity <a href="https://analytics-polygon.sushi.com/pairs/0xfbae8e2d04a67c10047d83ee9b8aeffe7f6ea3f4" target="_blank"><i class="fas fa-external-link-alt"></i></a></h6>
+                      </div>
+                      <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <row>
+                          <div
+                            class="
+                              text-xs
+                              font-weight-bold
+                              text-info text-uppercase
+                              mb-1
+                            "
+                          >
+                            Liquidity
+                          </div>
+                          <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                              <div
+                                class="
+                                  h5
+                                  mb-0
+                                  mr-3
+                                  font-weight-bold
+                                  text-gray-800
+                                "
+                              >
+                                <span id="sushiLiquidity">0.0</span>
+                              </div>
+                            </div>
+                          </div>
+                                                    <div
+                            class="
+                              text-xs
+                              font-weight-bold
+                              text-info text-uppercase
+                              mb-1
+                            "
+                          >
+                            JPYC
+                          </div>
+                          <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                              <div
+                                class="
+                                  h5
+                                  mb-0
+                                  mr-3
+                                  font-weight-bold
+                                  text-gray-800
+                                "
+                              >
+                                <span id="sushiJPYC">0.0</span>
+                              </div>
+                            </div>
+                          </div>
+                                                    <div
+                            class="
+                              text-xs
+                              font-weight-bold
+                              text-info text-uppercase
+                              mb-1
+                            "
+                          >
+                            YEN
+                          </div>
+                          <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                              <div
+                                class="
+                                  h5
+                                  mb-0
+                                  mr-3
+                                  font-weight-bold
+                                  text-gray-800
+                                "
+                              >
+                                <span id="sushiYEN">0.0</span>
+                              </div>
+                            </div>
+                          </div>
+                          </row>
+                        </div>
+                        <div class="col-auto">
+                          <div>
+                            <img src="img/sushi.png" width="48px"/></div>
+                          <div class="text-center"><a href="https://app.sushi.com/ja/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0x6ae7dfc73e0dde2aa99ac063dcf7e8a63265108c" target="_blank">add</a></div>
+                        </div>
+                      </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>YEN stabilizer <span id="versionText"></span></span>
+            </div>
+            <div class="copyright text-center my-auto" style="padding: 8px;">
+              <span>  Copyright &copy; @universay 2022</span>
+            </div>
+            <div class="copyright text-center my-auto">
+                <span>Thanks to <a href="https://startbootstrap.com/theme/sb-admin-2">SB Admin<sup>2</sup></a></span>
+            </div>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div
+      class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Select "Logout" below if you are ready to end your current session.
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a class="btn btn-primary" href="#" id="logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><div id="modalTitle">Modal title</div></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div id="modalBody">
+                <a href="#" class="btn btn-primary btn-icon-split" id="createNewWallet">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Create New Wallet</span>
+                </a>
+                <div class="pt-3">
+                   <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" aria-describedby="emailHelp" placeholder="Click Create New Wallet Button to show" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="privateKey">Private Key</label>
+                        <input type="text" class="form-control" id="privateKey" placeholder="" readonly>
+                    </div>
+                </div>
+
+                <a href="#" class="btn btn-primary btn-icon-split" id="import">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Import</span>
+                </a>
+                
+                <div>
+                    <div class="my-2"></div>
+                    <a href="#" class="btn btn-danger btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                        <span class="text">Store Private Key above by yourself.<br/>We do NOT save your key.<br/>You need the key to withdraw tokens.</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Modal Approve -->
+    <div class="modal fade" id="modalApprove" tabindex="-1" role="dialog" aria-labelledby="modalApproveLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalApproveLabel">Approve Coins</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div id="modalBody2">
+              <div>Do not click two approve buttons simultaneously. Approve another coin when one approval is done.</div>
+              <div class="row my-3">
+                <div class="col">
+                  <a href="#" class="btn btn-primary btn-icon-split" id="approveYEN0">
+                      <span class="icon text-white-50">
+                          <img src="img/quickswap.png" width="40px" />
+                      </span>
+                      <span class="text" id="approveYENtext0">Approve YEN</span>
+                      <span class="icon text-white-50">
+                          <img src="img/YEN.png" width="40px"  />
+                      </span>
+                  </a>
+                </div>
+
+                <div class="col">
+                  <a href="#" class="btn btn-primary btn-icon-split" id="approveJPYC0">
+                      <span class="icon text-white-50">
+                          <img src="img/quickswap.png" width="40px"  />
+                      </span>
+                      <span class="text" id="approveJPYCtext0">Approve JPYC</span>
+                      <span class="icon text-white-50">
+                          <img src="img/jpyc.svg" width="40px"  />
+                      </span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="row my-3">
+                <div class="col">
+                  <a href="#" class="btn btn-success btn-icon-split" id="approveYEN1">
+                      <span class="icon text-white-50">
+                          <img src="img/sushi.png" width="40px"  />
+                      </span>
+                      <span class="text" id="approveYENtext1">Approve YEN</span>
+                      <span class="icon text-white-50">
+                          <img src="img/YEN.png" width="40px"  />
+                      </span>
+                  </a>
+                </div>
+
+                <div class="col">
+                  <a href="#" class="btn btn-success btn-icon-split" id="approveJPYC1">
+                      <span class="icon text-white-50">
+                          <img src="img/sushi.png" width="40px"  />
+                      </span>
+                      <span class="text" id="approveJPYCtext1">Approve JPYC</span>
+                      <span class="icon text-white-50">
+                          <img src="img/jpyc.svg" width="40px"  />
+                      </span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Modal Option -->
+    <div class="modal fade" id="modalOption" tabindex="-1" role="dialog" aria-labelledby="modalOptionLabel" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalOptionLabel">Options</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div id="modalBody2">
+              
+              <div class="">
+                <div class="form-group">
+                  
+                  <label for="spreadWidth">Swap threshold</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="upperlabel">Upper threshold</span>
+                    </div>
+                    <input type="text" class="form-control" value="1.01" aria-label="" aria-describedby="upperLabel" id="swapUpperThreshold">
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="lowerlabel">Lower threshold</span>
+                    </div>
+                    <input type="text" class="form-control" value="0.99" aria-label="" aria-describedby="lowerLabel" id="swapLowerThreshold">
+                  </div>
+                  
+                  <!--
+                  <label for="spreadWidth">Triger spread width: <span id="spread">2.0</span></label>
+                  <div class="row mb-4">
+                    <div class="col"><input type="range" class="form-control-range" id="spreadWidth" min="2" max="10" step="0.1" value="2"></div>
+                  </div>
+                  -->
+                  
+                  <label for="spreadWidth">Minimum exchange amount</label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" value="10" aria-label="Minimum exchange amount of YEN" aria-describedby="minYENlabel" id="swapMinYEN">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="minYENlabel">YEN</span>
+                    </div>
+                  </div>
+
+                  <div class="input-group mb-4">
+                    <input type="text" class="form-control" value="10" aria-label="Minimum exchange amount of JPYC" aria-describedby="minJPYClabel" id="swapMinJPYC">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="minJPYClabel">JPYC</span>
+                    </div>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="reloadAvailableUpdate">
+                    <label class="form-check-label" for="reloadAvailableUpdate">
+                      Reload if updates available
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-primary btn-icon-split" id="submitOption">
+                <span class="icon text-white-50">
+                    <i class="fas fa-arrow-right"></i>
+                </span>
+                <span class="text">Save</span>
+            </a>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Modal Autoswap Matic -->
+    <div class="modal fade" id="modalAutoswapMatic" tabindex="-1" role="dialog" aria-labelledby="modalAutoswapMatic" aria-hidden="false">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" >Autoswap Matic</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body" >
+              <div id="modalBody2">
+                <div>Automatically swap YEN or JPYC for MATIC when the balance MATIC for gas runderruns.</div>
+                <div class="pt-3">
+                    <div class="form-group">
+                        <label for="privateKey">Lower limit</label>
+                        <input type="number" class="form-control" id="lowerSwapMaticThreshold" placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="privateKey">Amount of MATIC</label>
+                      <input type="number" class="form-control" id="swapMaticAmount" placeholder="">
+                  </div>
+                </div>
+
+                
+              </div>
+          </div>
+          
+          <div class="modal-footer">
+              <a href="#" class="btn btn-primary btn-icon-split" id="submitAutoSwap">
+                  <span class="icon text-white-50">
+                      <i class="fas fa-arrow-right"></i>
+                  </span>
+                  <span class="text">Save</span>
+              </a>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+          </div>
+      </div>
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+
+    <script type="module" src="js/index.min.js"></script>
+
+    
+    <!-- <script src="js/index.js"></script> -->
+  </body>
+</html>
