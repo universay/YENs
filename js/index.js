@@ -291,10 +291,10 @@
  
      // QuickSwapとSushiSwapの両方がtrigerされる場合にトライする順番をランダム化する
      let array = [0, 1];
-     if (Math.random() > 0.5) {
-       array = array;
+     //if (Math.random() > 0.5) {
+       //array = array;
        //array = array.reverse();
-     }
+     //}
      array.forEach((i) => {
        if (
          nuko.rate[i] > nuko.upperThreshold &&
