@@ -757,7 +757,7 @@
      "$" +
        (
          (nuko.rateReserveJPYC[0] +
-         nuko.rateReserveYEN[0]) / (nuko.rate[0] * Nuko.jpyusd)
+         nuko.rateReserveYEN[0]) / (nuko.rate[0] * nuko.jpyusd)
        ).toLocaleString(undefined, {
          maximumFractionDigits: 0,
        })
@@ -777,7 +777,7 @@
      "$" +
        (
          (nuko.rateReserveJPYC[1] +
-         nuko.rateReserveYEN[1]) / nuko.rate[1]
+         nuko.rateReserveYEN[1]) / (nuko.rate[1]* nuko.jpyusd)
        ).toLocaleString(undefined, {
          maximumFractionDigits: 0,
        })
