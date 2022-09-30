@@ -298,7 +298,7 @@
      array.forEach((i) => {
        if (
          nuko.rate[i] > nuko.upperThreshold &&
-         parseFloat(web3.utils.fromWei(nuko.balanceJPYC, "mwei")) >
+         parseFloat(web3.utils.fromWei(nuko.balanceJPYC)) >
            nuko.swapMinJPYC &&
          parseInt(nuko.allowanceJPYC[i]) > 0
        ) {
@@ -306,7 +306,7 @@
            nuko.flgSwapping = true;
            //console.log("JPYC->YEN");
            let bl =
-             parseFloat(web3.utils.fromWei(nuko.balanceJPYC, "mwei")) * 0.99999;
+             parseFloat(web3.utils.fromWei(nuko.balanceJPYC)) * 0.99999;
            let amount = bl > nuko.swapMaxJPYC ? nuko.swapMaxJPYC : bl;
            let minAmount = amount * nuko.rate[i] * (1.0 - nuko.swapSlippage[i]);
  
@@ -362,7 +362,7 @@
          nuko.rateReserveYEN[i] = values[1] / 10 ** 18;
          nuko.rateRaw[i] = nuko.rateReserveYEN[i] / nuko.rateReserveJPYC[i];
          nuko.rate[i] =
-           Math.floor(nuko.rateRaw[i] * Math.pow(10, 2)) / Math.pow(10, 2);
+           Math.floor(nuko.rateRaw[i] * Math.pow(10, 4)) / Math.pow(10, 4);
        });
    }
    $("#rate").text(nuko.rate[0] + " / " + nuko.rate[1]);
@@ -550,8 +550,8 @@
      return m;
    })();
    const jpycVal = await (async () => {
-     let m = parseFloat(web3.utils.fromWei(nuko.balanceJPYC, "mwei"));
-     m = Math.floor(m * Math.pow(10, 4)) / Math.pow(10, 4);
+     let m = parseFloat(web3.utils.fromWei(nuko.balanceJPYC));
+     m = Math.floor(m * Math.pow(10, 2)) / Math.pow(10, 2);
      return m;
    })();
  
@@ -1031,10 +1031,10 @@
    updateAllowance();
  
    nuko.upperThreshold = parseFloat(
-     localStorage.upperThreshold ? localStorage.upperThreshold : 117.7
+     localStorage.upperThreshold ? localStorage.upperThreshold : 1.01
    );
    nuko.lowerThreshold = parseFloat(
-     localStorage.lowerThreshold ? localStorage.lowerThreshold : 115.7
+     localStorage.lowerThreshold ? localStorage.lowerThreshold : 0.99
    );
    $("#swapUpperThreshold").val(nuko.upperThreshold.toFixed(2));
    $("#swapLowerThreshold").val(nuko.lowerThreshold.toFixed(2));
@@ -1054,7 +1054,7 @@
     */
    {
      nuko.swapMinYEN = parseFloat(
-       localStorage.swapMinYEN ? localStorage.swapMinYEN : 1000.0
+       localStorage.swapMinYEN ? localStorage.swapMinYEN : 10.0
      );
      nuko.swapMinJPYC = parseFloat(
        localStorage.swapMinJPYC ? localStorage.swapMinJPYC : 10.0
