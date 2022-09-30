@@ -93,7 +93,7 @@ const getRate = async () => {
       .getReserves()
       .call()
       .then((values) => {
-        nuko.rateReserveJPYC[i] = values[0] / 10 ** 6;
+        nuko.rateReserveJPYC[i] = values[0] / 10 ** 18;
         nuko.rateReserveYEN[i] = values[1] / 10 ** 18;
         nuko.rateRaw[i] = nuko.rateReserveYEN[i] / nuko.rateReserveJPYC[i];
         nuko.rate[i] =
