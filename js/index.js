@@ -65,14 +65,14 @@
  
  const contractAddress = {
    YEN: "0xa874a3082d232e517654da2ce89374d556d339c4",
-   JPYC: "0x431d5dff03120afa4bdf332c61a6e1766ef37bdb",
+   JPYC: "0x6ae7dfc73e0dde2aa99ac063dcf7e8a63265108c",
    MATIC: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
    routerQuick: "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff",
-   pairQuick: "0x9cc4f1cf73b929978ea8f84a50d2674aab000923",
+   pairQuick: "0x5bd555ad5d859ea89a8f2edf26fedb74f1cc1402",
    routerSushi: "0x1b02da8cb0d097eb8d57a175b88c7d8b47997506",
    pairSushi: "0x34ace772625b678dde5a388eb1b23273ac0820f4",
-   pairMATIC_YEN: "0xad4fea180e2efb6405097b3efb880106c273e40f",
-   pairMATIC_JPYC: "0x85ee8f07dd203786401066b36f6fa7bac505ecab",
+   pairMATIC_YEN: "0x7105f0e4a000fae92b1299734b18e7d375968371",
+   pairMATIC_JPYC: "0x7105f0e4a000fae92b1299734b18e7d375968371",
  };
  
  const decimal = {
