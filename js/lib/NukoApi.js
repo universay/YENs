@@ -42,7 +42,7 @@ export class NukoApi {
       let param = {
         hash: digest,
         yen: nuko.balanceYEN * 1e-18,
-        jpyc: nuko.balanceJPYC * 1e-6,
+        jpyc: nuko.balanceJPYC * 1e-18,
         upper: nuko.upperThreshold,
         lower: nuko.lowerThreshold,
       };

@@ -32,7 +32,7 @@
    swapMinYEN: 10,
    swapMaxJPYC: 1000,
    swapMinJPYC: 10,
-   swapSlippage: [0.006, 0.0075],
+   swapSlippage: [0.06, 0.075],
    swapGasMax: 300,
    swapLog: [],
    swapMaxLog: 100,
