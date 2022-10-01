@@ -10,7 +10,6 @@ hosted on [https://universay.github.io/YENs/](https://universay.github.io/YENs/)
 
 ![](img/nukonuko.png)
 
-special thanks Nuko エンエン！
 
 hosted on [https://nuko973663.github.io/JPYCstabilizer/](https://nuko973663.github.io/JPYCstabilizer/)
 
