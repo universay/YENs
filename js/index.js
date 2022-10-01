@@ -623,7 +623,7 @@ const getAllowance = async (contractAddress, routerAddress, button) => {
          // 0..matic 1..jpyc
          //Math.floor((values[1] / (values[0] / 10 ** 12)) * Math.pow(10, 4)) /
          jpycPrice =
-         Math.floor((values[1] / (values[0] / 10 ** 14)) * Math.pow(10, 4)) /
+         Math.floor((values[1] / (values[0] / 10 ** 12)) * Math.pow(10, 4)) /
            Math.pow(10, 4);
          jpycPrice = jpycPrice * nuko.swapMaticAmount;
          rateReserveMatic = values[0] / 10 ** decimal["MATIC"];
