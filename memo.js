@@ -1,5 +1,5 @@
 /**
- * yen stabilizer
+ * jpyc stabilizer
  * index.js
  */
 
@@ -9,7 +9,7 @@
  
  var nukoZ = new Nuko();
  
- const VERSION_TEXT = "20221001.0";
+ const VERSION_TEXT = "20210929.0";
  
  var nuko = {
    rate: [],
@@ -17,27 +17,27 @@
    rateId: 0,
    rateInterval: 30000, // RPC nodeに負荷をかけるので短くするのはお控えください Please do not shorten rateInterval. It causes high load of RPC node.
    rateContract: null,
+   rateReserveUSDC: [],
    rateReserveJPYC: [],
-   rateReserveYEN: [],
    rateReserveMATIC: [],
+   allowanceUSDC: [],
    allowanceJPYC: [],
-   allowanceYEN: [],
-   balanceYEN: 0,
    balanceJPYC: 0,
+   balanceUSDC: 0,
    balanceMATIC: 0,
-   balanceContractYEN: null,
    balanceContractJPYC: null,
+   balanceContractUSDC: null,
    swapContract: [],
-   swapMaxYEN: 1000,
-   swapMinYEN: 10,
-   swapMaxJPYC: 1000,
-   swapMinJPYC: 10,
+   swapMaxJPYC: 10000,
+   swapMinJPYC: 1000,
+   swapMaxUSDC: 100,
+   swapMinUSDC: 10,
    swapSlippage: [0.006, 0.0075],
    swapGasMax: 300,
    swapLog: [],
    swapMaxLog: 100,
-   upperThreshold: 1.01,
-   lowerThreshold: 0.99,
+   upperThreshold: 117.9,
+   lowerThreshold: 115.9,
    target: 0,
    spread: 2,
    jpyusd: 100,
@@ -64,20 +64,20 @@
  ];
  
  const contractAddress = {
-  YEN: "0xa874a3082d232e517654da2ce89374d556d339c4",
-  JPYC: "0x431d5dff03120afa4bdf332c61a6e1766ef37bdb",
-  MATIC: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
-  routerQuick: "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff",
-  pairQuick: "0x9cc4f1cf73b929978ea8f84a50d2674aab000923",
-  routerSushi: "0x1b02da8cb0d097eb8d57a175b88c7d8b47997506",
-  pairSushi: "0x34ace772625b678dde5a388eb1b23273ac0820f4",
-  pairMATIC_YEN: "0xad4fea180e2efb6405097b3efb880106c273e40f",
-  pairMATIC_JPYC: "0x85ee8f07dd203786401066b36f6fa7bac505ecab",
-};
+   JPYC: "0x6ae7dfc73e0dde2aa99ac063dcf7e8a63265108c",
+   USDC: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+   MATIC: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+   routerQuick: "0xa5e0829caced8ffdd4de3c43696c57f7d7a678ff",
+   pairQuick: "0x205995421C72Dc223F36BbFad78B66EEa72d2677",
+   routerSushi: "0x1b02da8cb0d097eb8d57a175b88c7d8b47997506",
+   pairSushi: "0xfbae8e2d04a67c10047d83ee9b8aeffe7f6ea3f4",
+   pairMATIC_JPYC: "0x7105f0e4a000fae92b1299734b18e7d375968371",
+   pairMATIC_USDC: "0x6e7a5fafcec6bb1e78bae2a1f0b612012bf14827",
+ };
  
  const decimal = {
-   YEN: 18,
    JPYC: 18,
+   USDC: 6,
    MATIC: 18,
  };
  
@@ -129,13 +129,13 @@
    //
    let amountIn = Math.floor(amount * 10 ** decimal[from]) / 10 ** decimal[from];
    amountIn =
-     from == "YEN"
+     from == "JPYC"
        ? web3.utils.toWei(amountIn.toString())
        : web3.utils.toWei(amountIn.toString(), "mwei");
  
    let amountOut = Math.floor(minAmount * 10 ** decimal[to]) / 10 ** decimal[to];
    amountOut =
-     from == "YEN"
+     from == "JPYC"
        ? web3.utils.toWei(amountOut.toString(), "mwei")
        : web3.utils.toWei(amountOut.toString());
  
@@ -207,19 +207,18 @@
            nuko.swapLog.pop();
          }
          localStorage.swapLog = JSON.stringify(nuko.swapLog);
-         let yen, jpyc, total;
+         let jpyc, usdc, total;
  
-         if (from == "YEN") {
-           yen = parseFloat(amount);
-           jpyc = 0;
-           total = yen / nuko.rate[i];
-           //nuko.rate = YEN / JPYC
-         } else {
-           yen = 0;
+         if (from == "JPYC") {
            jpyc = parseFloat(amount);
-           total = jpyc;
+           usdc = 0;
+           total = jpyc / nuko.rate[i];
+         } else {
+           jpyc = 0;
+           usdc = parseFloat(amount);
+           total = usdc;
          }
-         Nuko.API.postWin(dt, nuko.wallet[0].address, jpyc, yen, total, "");
+         Nuko.API.postWin(dt, nuko.wallet[0].address, usdc, jpyc, total, "");
        });
    } catch (e) {
      link = link + '<i class="fas fa-exclamation-triangle"></i>';
@@ -248,34 +247,34 @@
  };
  
  const updateCommunityBalance = (json, rate) => {
-   json.yenNum = parseFloat(json.yen);
    json.jpycNum = parseFloat(json.jpyc);
-   $("#communityBalanceYEN").text(
-     json.yenNum.toLocaleString(undefined, {
-       maximumFractionDigits: 0,
-     })
-   );
+   json.usdcNum = parseFloat(json.usdc);
    $("#communityBalanceJPYC").text(
      json.jpycNum.toLocaleString(undefined, {
        maximumFractionDigits: 0,
      })
    );
- 
-   $("#communityBalanceYEN2").text(
-     json.yenNum.toLocaleString(undefined, {
-       maximumFractionDigits: 0,
+   $("#communityBalanceUSDC").text(
+     json.usdcNum.toLocaleString(undefined, {
+       maximumFractionDigits: 2,
      })
    );
+ 
    $("#communityBalanceJPYC2").text(
      json.jpycNum.toLocaleString(undefined, {
        maximumFractionDigits: 0,
      })
    );
+   $("#communityBalanceUSDC2").text(
+     json.usdcNum.toLocaleString(undefined, {
+       maximumFractionDigits: 2,
+     })
+   );
  
    let chart = chartCommunityBalance;
  
-   chart.data.datasets[0].data[0] = json.jpycNum;
-   chart.data.datasets[0].data[1] = json.yen / rate;
+   chart.data.datasets[0].data[0] = json.usdcNum;
+   chart.data.datasets[0].data[1] = json.jpyc / rate;
  
    chart.update();
  };
@@ -292,28 +291,27 @@
  
      // QuickSwapとSushiSwapの両方がtrigerされる場合にトライする順番をランダム化する
      let array = [0, 1];
-     //if (Math.random() > 0.5) {
-       //array = array;
-       //array = array.reverse();
-     //}
+     if (Math.random() > 0.5) {
+       array = array.reverse();
+     }
      array.forEach((i) => {
        if (
          nuko.rate[i] > nuko.upperThreshold &&
-         parseFloat(web3.utils.fromWei(nuko.balanceJPYC)) >
-           nuko.swapMinJPYC &&
-         parseInt(nuko.allowanceJPYC[i]) > 0
+         parseFloat(web3.utils.fromWei(nuko.balanceUSDC, "mwei")) >
+           nuko.swapMinUSDC &&
+         parseInt(nuko.allowanceUSDC[i]) > 0
        ) {
          if (!nuko.flgSwapping) {
            nuko.flgSwapping = true;
-           //console.log("JPYC->YEN");
+           //console.log("USDC->JPYC");
            let bl =
-             parseFloat(web3.utils.fromWei(nuko.balanceJPYC)) * 0.99999;
-           let amount = bl > nuko.swapMaxJPYC ? nuko.swapMaxJPYC : bl;
+             parseFloat(web3.utils.fromWei(nuko.balanceUSDC, "mwei")) * 0.99999;
+           let amount = bl > nuko.swapMaxUSDC ? nuko.swapMaxUSDC : bl;
            let minAmount = amount * nuko.rate[i] * (1.0 - nuko.swapSlippage[i]);
  
            goSwap(
+             "USDC",
              "JPYC",
-             "YEN",
              amount,
              minAmount,
              nukoZ.gas.price < nuko.swapGasMax
@@ -324,20 +322,20 @@
          }
        } else if (
          nuko.rate[i] < nuko.lowerThreshold &&
-         parseFloat(web3.utils.fromWei(nuko.balanceYEN)) > nuko.swapMinYEN &&
-         parseInt(nuko.allowanceYEN[i]) > 0
+         parseFloat(web3.utils.fromWei(nuko.balanceJPYC)) > nuko.swapMinJPYC &&
+         parseInt(nuko.allowanceJPYC[i]) > 0
        ) {
          if (!nuko.flgSwapping) {
            nuko.flgSwapping = true;
-           //console.log("YEN -> JPYC");
-           let bl = parseFloat(web3.utils.fromWei(nuko.balanceYEN)) * 0.99999;
-           let amount = bl > nuko.swapMaxYEN ? nuko.swapMaxYEN : bl;
+           //console.log("JPYC -> USDC");
+           let bl = parseFloat(web3.utils.fromWei(nuko.balanceJPYC)) * 0.99999;
+           let amount = bl > nuko.swapMaxJPYC ? nuko.swapMaxJPYC : bl;
            let minAmount =
              (amount / nuko.rate[i]) * (1.0 - nuko.swapSlippage[i]);
  
            goSwap(
-             "YEN",
              "JPYC",
+             "USDC",
              amount,
              minAmount,
              nukoZ.gas.price < nuko.swapGasMax
@@ -359,11 +357,11 @@
        .getReserves()
        .call()
        .then((values) => {
-         nuko.rateReserveJPYC[i] = values[0] / 10 ** 18;
-         nuko.rateReserveYEN[i] = values[1] / 10 ** 18;
-         nuko.rateRaw[i] = nuko.rateReserveYEN[i] / nuko.rateReserveJPYC[i];
+         nuko.rateReserveUSDC[i] = values[0] / 10 ** 6;
+         nuko.rateReserveJPYC[i] = values[1] / 10 ** 18;
+         nuko.rateRaw[i] = nuko.rateReserveJPYC[i] / nuko.rateReserveUSDC[i];
          nuko.rate[i] =
-           Math.floor(nuko.rateRaw[i] * Math.pow(10, 4)) / Math.pow(10, 4);
+           Math.floor(nuko.rateRaw[i] * Math.pow(10, 2)) / Math.pow(10, 2);
        });
    }
    $("#rate").text(nuko.rate[0] + " / " + nuko.rate[1]);
@@ -373,7 +371,7 @@
  };
  
  const chartAddData = (label, data) => {
-   let chart = chartYENJPYC;
+   let chart = chartJPYCUSDC;
    chart.data.labels.push(label);
    chart.data.datasets[0].data.push(data[0]);
    chart.data.datasets[1].data.push(data[1]);
@@ -392,31 +390,29 @@
      );
    });
  
-   nuko.balanceContractYEN.methods
-     .balanceOf(nuko.wallet[0].address)
-     .call()
-     .then((balance) => {
-       nuko.balanceYEN = balance;
-       let m = parseFloat(web3.utils.fromWei(balance));
-       m = Math.floor(m * Math.pow(10, 2)) / Math.pow(10, 2);
-       $("#balanceYEN").text(
-         m.toLocaleString(undefined, {
-           maximumFractionDigits: 0,
-         })
-       );
-     });
    nuko.balanceContractJPYC.methods
      .balanceOf(nuko.wallet[0].address)
      .call()
      .then((balance) => {
        nuko.balanceJPYC = balance;
        let m = parseFloat(web3.utils.fromWei(balance));
-       //let m = parseFloat(web3.utils.fromWei(balance, "mwei"));
        m = Math.floor(m * Math.pow(10, 2)) / Math.pow(10, 2);
        $("#balanceJPYC").text(
          m.toLocaleString(undefined, {
            maximumFractionDigits: 0,
-           //maximumFractionDigits: 2,
+         })
+       );
+     });
+   nuko.balanceContractUSDC.methods
+     .balanceOf(nuko.wallet[0].address)
+     .call()
+     .then((balance) => {
+       nuko.balanceUSDC = balance;
+       let m = parseFloat(web3.utils.fromWei(balance, "mwei"));
+       m = Math.floor(m * Math.pow(10, 4)) / Math.pow(10, 4);
+       $("#balanceUSDC").text(
+         m.toLocaleString(undefined, {
+           maximumFractionDigits: 2,
          })
        );
        return balance;
@@ -444,28 +440,28 @@
  };
  
  /**
-  * get allowance for JPYC and YEN and update modal buttons
+  * get allowance for USDC and JPYC and update modal buttons
   */
  const updateAllowance = async () => {
+   nuko.allowanceUSDC[0] = await getAllowance(
+     contractAddress.USDC,
+     contractAddress.routerQuick,
+     "#approveUSDC0"
+   );
    nuko.allowanceJPYC[0] = await getAllowance(
      contractAddress.JPYC,
      contractAddress.routerQuick,
      "#approveJPYC0"
    );
-   nuko.allowanceYEN[0] = await getAllowance(
-     contractAddress.YEN,
-     contractAddress.routerQuick,
-     "#approveYEN0"
-   );
-   nuko.allowanceYEN[1] = await getAllowance(
-     contractAddress.YEN,
-     contractAddress.routerSushi,
-     "#approveYEN1"
-   );
    nuko.allowanceJPYC[1] = await getAllowance(
      contractAddress.JPYC,
      contractAddress.routerSushi,
      "#approveJPYC1"
+   );
+   nuko.allowanceUSDC[1] = await getAllowance(
+     contractAddress.USDC,
+     contractAddress.routerSushi,
+     "#approveUSDC1"
    );
  };
  
@@ -545,72 +541,18 @@
      return;
    }
  
-   const yenVal = await (async () => {
-     let m = parseFloat(web3.utils.fromWei(nuko.balanceYEN));
-     m = Math.floor(m * Math.pow(10, 2)) / Math.pow(10, 2);
-     return m;
-   })();
    const jpycVal = await (async () => {
      let m = parseFloat(web3.utils.fromWei(nuko.balanceJPYC));
      m = Math.floor(m * Math.pow(10, 2)) / Math.pow(10, 2);
      return m;
    })();
+   const usdcVal = await (async () => {
+     let m = parseFloat(web3.utils.fromWei(nuko.balanceUSDC, "mwei"));
+     m = Math.floor(m * Math.pow(10, 4)) / Math.pow(10, 4);
+     return m;
+   })();
  
-   if (yenVal > 1) {
-     // YEN => MATIC
-     let yenPrice = 0;
-     let rateReserveMatic = 0;
-     let rateReserveYen = 0;
-     let contract = new web3.eth.Contract(abi, contractAddress.pairMATIC_YEN);
-     await contract.methods
-       .getReserves()
-       .call()
-       .then((values) => {
-         // 0..matic 1..yen
-         yenPrice =
-           Math.floor((values[1] / values[0]) * Math.pow(10, 2)) /
-           Math.pow(10, 2);
-         yenPrice = yenPrice * swapMaticAmount;
-         rateReserveMatic = values[0] / 10 ** decimal["MATIC"];
-         rateReserveYen = values[1] / 10 ** decimal["YEN"];
-       });
-     // getRate
-     let rateRaw = rateReserveYen / rateReserveMatic;
-     let rate = Math.floor(rateRaw * Math.pow(10, 2)) / Math.pow(10, 2);
-     // watchRate
-     let maticYenMinAmout = (yenPrice / rate) * (1.0 - nuko.swapSlippage);
-     // goSwap
-     let amountIn =
-       Math.floor(yenPrice * 10 ** decimal["YEN"]) / 10 ** decimal["YEN"];
-     amountIn = web3.utils.toWei(amountIn.toString());
-     let amountOut =
-       Math.floor(maticYenMinAmout * 10 ** decimal["MATIC"]) /
-       10 ** decimal["MATIC"];
-     amountOut = web3.utils.toWei(amountOut.toString());
- 
-     let gas =
-       nukoZ.gas.price < nuko.swapGasMax ? nukoZ.gas.price : nuko.swapGasMax;
-     const swap = async () => {
-       try {
-         await nuko.swapContract[0].methods
-           .swapExactTokensForETH(
-             web3.utils.toHex(amountIn),
-             web3.utils.toHex(amountOut),
-             [contractAddress["YEN"], contractAddress["MATIC"]],
-             nuko.wallet[0].address,
-             Math.floor(Date.now() / 1000) + 60 * 5
-           )
-           .send({
-             from: nuko.wallet[0].address,
-             gasLimit: web3.utils.toHex(nukoZ.gas.limit),
-             gasPrice: web3.utils.toHex(gas * 1e9),
-           });
-       } catch (e) {
-         console.error(e);
-       }
-     };
-     await swap();
-   } else if (jpycVal > 1) {
+   if (jpycVal > 1) {
      // JPYC => MATIC
      let jpycPrice = 0;
      let rateReserveMatic = 0;
@@ -624,7 +566,7 @@
          jpycPrice =
            Math.floor((values[1] / values[0]) * Math.pow(10, 2)) /
            Math.pow(10, 2);
-         jpycPrice = jpycPrice * nuko.swapMaticAmount;
+         jpycPrice = jpycPrice * swapMaticAmount;
          rateReserveMatic = values[0] / 10 ** decimal["MATIC"];
          rateReserveJpyc = values[1] / 10 ** decimal["JPYC"];
        });
@@ -664,6 +606,60 @@
        }
      };
      await swap();
+   } else if (usdcVal > 1) {
+     // USDC => MATIC
+     let usdcPrice = 0;
+     let rateReserveMatic = 0;
+     let rateReserveUsdc = 0;
+     let contract = new web3.eth.Contract(abi, contractAddress.pairMATIC_USDC);
+     await contract.methods
+       .getReserves()
+       .call()
+       .then((values) => {
+         // 0..matic 1..usdc
+         usdcPrice =
+           Math.floor((values[1] / (values[0] / 10 ** 12)) * Math.pow(10, 4)) /
+           Math.pow(10, 4);
+         usdcPrice = usdcPrice * nuko.swapMaticAmount;
+         rateReserveMatic = values[0] / 10 ** decimal["MATIC"];
+         rateReserveUsdc = values[1] / 10 ** decimal["USDC"];
+       });
+     // getRate
+     let rateRaw = rateReserveUsdc / rateReserveMatic;
+     let rate = Math.floor(rateRaw * Math.pow(10, 4)) / Math.pow(10, 4);
+     // watchRate
+     let maticUsdcMinAmout = (usdcPrice / rate) * (1.0 - nuko.swapSlippage);
+     // goSwap
+     let amountIn =
+       Math.floor(usdcPrice * 10 ** decimal["USDC"]) / 10 ** decimal["USDC"];
+     amountIn = web3.utils.toWei(amountIn.toString(), "mwei");
+     let amountOut =
+       Math.floor(maticUsdcMinAmout * 10 ** decimal["MATIC"]) /
+       10 ** decimal["MATIC"];
+     amountOut = web3.utils.toWei(amountOut.toString());
+ 
+     let gas =
+       nukoZ.gas.price < nuko.swapGasMax ? nukoZ.gas.price : nuko.swapGasMax;
+     const swap = async () => {
+       try {
+         await nuko.swapContract[0].methods
+           .swapExactTokensForETH(
+             web3.utils.toHex(amountIn),
+             web3.utils.toHex(amountOut),
+             [contractAddress["USDC"], contractAddress["MATIC"]],
+             nuko.wallet[0].address,
+             Math.floor(Date.now() / 1000) + 60 * 5
+           )
+           .send({
+             from: nuko.wallet[0].address,
+             gasLimit: web3.utils.toHex(nukoZ.gas.limit),
+             gasPrice: web3.utils.toHex(gas * 1e9),
+           });
+       } catch (e) {
+         console.error(e);
+       }
+     };
+     await swap();
    }
  };
  
@@ -674,13 +670,13 @@
    $("#versionText").text("ver. " + VERSION_TEXT);
    $("#versionText2").text("ver. " + VERSION_TEXT);
    initialize();
-   nuko.balanceContractYEN = new web3.eth.Contract(
-     abiERC20,
-     contractAddress.YEN
-   );
    nuko.balanceContractJPYC = new web3.eth.Contract(
      abiERC20,
      contractAddress.JPYC
+   );
+   nuko.balanceContractUSDC = new web3.eth.Contract(
+     abiERC20,
+     contractAddress.USDC
    );
    nuko.contractRate[0] = new web3.eth.Contract(abi, contractAddress.pairQuick);
    nuko.contractRate[1] = new web3.eth.Contract(abi, contractAddress.pairSushi);
@@ -750,48 +746,48 @@
  
  const resizeChart = () => {
    let w = $("#containerBody").width() - 400;
-   chartYENJPYC.resize(w, ctx.clientHeight);
+   chartJPYCUSDC.resize(w, ctx.clientHeight);
  };
  
  const updateLiquidity = () => {
    $("#quickLiquidity").text(
      "$" +
        (
-         (nuko.rateReserveJPYC[0] +
-         nuko.rateReserveYEN[0]) / (nuko.rate[0] * nuko.jpyusd)
+         nuko.rateReserveUSDC[0] +
+         nuko.rateReserveJPYC[0] / nuko.rate[0]
        ).toLocaleString(undefined, {
          maximumFractionDigits: 0,
        })
+   );
+   $("#quickUSDC").text(
+     nuko.rateReserveUSDC[0].toLocaleString(undefined, {
+       maximumFractionDigits: 0,
+     }) + " USDC"
    );
    $("#quickJPYC").text(
      nuko.rateReserveJPYC[0].toLocaleString(undefined, {
        maximumFractionDigits: 0,
      }) + " JPYC"
    );
-   $("#quickYEN").text(
-     nuko.rateReserveYEN[0].toLocaleString(undefined, {
-       maximumFractionDigits: 0,
-     }) + " YEN"
-   );
  
    $("#sushiLiquidity").text(
      "$" +
        (
-         (nuko.rateReserveJPYC[1] +
-         nuko.rateReserveYEN[1]) / (nuko.rate[1]* nuko.jpyusd)
+         nuko.rateReserveUSDC[1] +
+         nuko.rateReserveJPYC[1] / nuko.rate[1]
        ).toLocaleString(undefined, {
          maximumFractionDigits: 0,
        })
+   );
+   $("#sushiUSDC").text(
+     nuko.rateReserveUSDC[1].toLocaleString(undefined, {
+       maximumFractionDigits: 0,
+     }) + " USDC"
    );
    $("#sushiJPYC").text(
      nuko.rateReserveJPYC[1].toLocaleString(undefined, {
        maximumFractionDigits: 0,
      }) + " JPYC"
-   );
-   $("#sushiYEN").text(
-     nuko.rateReserveYEN[1].toLocaleString(undefined, {
-       maximumFractionDigits: 0,
-     }) + " YEN"
    );
  };
  
@@ -799,7 +795,7 @@
   * check if latest version is available. then reload.
   */
  const checkLatestVersion = () => {
-   fetch("https://universay.github.io/YENstabilizer/version.json").then(
+   fetch("https://nuko973663.github.io/JPYCstabilizer/version.json").then(
      (res) => {
        if (res.ok) {
          res.json().then((j) => {
@@ -893,14 +889,6 @@
    $("#lowerSwapMaticThreshold").val(nuko.lowerSwapMaticThreshold);
    $("#swapMaticAmount").val(nuko.swapMaticAmount);
  
-   $("#approveYEN0").on("click", () => {
-     $("#approveYEN0").addClass("disabled");
-     approveCoin(
-       contractAddress.YEN,
-       contractAddress.routerQuick,
-       "#approveYENtext0"
-     );
-   });
    $("#approveJPYC0").on("click", () => {
      $("#approveJPYC0").addClass("disabled");
      approveCoin(
@@ -909,12 +897,12 @@
        "#approveJPYCtext0"
      );
    });
-   $("#approveYEN1").on("click", () => {
-     $("#approveYEN1").addClass("disabled");
+   $("#approveUSDC0").on("click", () => {
+     $("#approveUSDC0").addClass("disabled");
      approveCoin(
-       contractAddress.YEN,
-       contractAddress.routerSushi,
-       "#approveYENtext1"
+       contractAddress.USDC,
+       contractAddress.routerQuick,
+       "#approveUSDCtext0"
      );
    });
    $("#approveJPYC1").on("click", () => {
@@ -923,6 +911,14 @@
        contractAddress.JPYC,
        contractAddress.routerSushi,
        "#approveJPYCtext1"
+     );
+   });
+   $("#approveUSDC1").on("click", () => {
+     $("#approveUSDC1").addClass("disabled");
+     approveCoin(
+       contractAddress.USDC,
+       contractAddress.routerSushi,
+       "#approveUSDCtext1"
      );
    });
  
@@ -1013,18 +1009,18 @@
  
    if (!localStorage.sentPastActivity == 1) {
      nuko.swapLog.forEach((log) => {
-       let yen, jpyc, total;
+       let jpyc, usdc, total;
        let rate = parseFloat(log[3].toString().slice(-6));
-       if (log[1] == "YEN") {
-         yen = parseFloat(log[4].replace(/,/g, ""));
-         jpyc = 0;
-         total = yen / rate;
-       } else {
-         yen = 0;
+       if (log[1] == "JPYC") {
          jpyc = parseFloat(log[4].replace(/,/g, ""));
-         total = jpyc;
+         usdc = 0;
+         total = jpyc / rate;
+       } else {
+         jpyc = 0;
+         usdc = parseFloat(log[4].replace(/,/g, ""));
+         total = usdc;
        }
-       Nuko.API.postWin(log[0], nuko.wallet[0].address, jpyc, yen, total, "");
+       Nuko.API.postWin(log[0], nuko.wallet[0].address, usdc, jpyc, total, "");
      });
      localStorage.sentPastActivity = 1;
    }
@@ -1032,10 +1028,10 @@
    updateAllowance();
  
    nuko.upperThreshold = parseFloat(
-     localStorage.upperThreshold ? localStorage.upperThreshold : 1.01
+     localStorage.upperThreshold ? localStorage.upperThreshold : 117.7
    );
    nuko.lowerThreshold = parseFloat(
-     localStorage.lowerThreshold ? localStorage.lowerThreshold : 0.99
+     localStorage.lowerThreshold ? localStorage.lowerThreshold : 115.7
    );
    $("#swapUpperThreshold").val(nuko.upperThreshold.toFixed(2));
    $("#swapLowerThreshold").val(nuko.lowerThreshold.toFixed(2));
@@ -1054,23 +1050,23 @@
     * minimum amount of swaping
     */
    {
-     nuko.swapMinYEN = parseFloat(
-       localStorage.swapMinYEN ? localStorage.swapMinYEN : 10.0
-     );
      nuko.swapMinJPYC = parseFloat(
-       localStorage.swapMinJPYC ? localStorage.swapMinJPYC : 10.0
+       localStorage.swapMinJPYC ? localStorage.swapMinJPYC : 1000.0
      );
-     $("#swapMinYEN").val(nuko.swapMinYEN);
+     nuko.swapMinUSDC = parseFloat(
+       localStorage.swapMinUSDC ? localStorage.swapMinUSDC : 10.0
+     );
      $("#swapMinJPYC").val(nuko.swapMinJPYC);
-     $("#swapMinYEN").on("change", () => {
-       nuko.swapMinYEN = parseFloat($("#swapMinYEN").val());
-       localStorage.swapMinYEN = nuko.swapMinYEN;
-       console.log(nuko.swapMinYEN);
-     });
+     $("#swapMinUSDC").val(nuko.swapMinUSDC);
      $("#swapMinJPYC").on("change", () => {
        nuko.swapMinJPYC = parseFloat($("#swapMinJPYC").val());
        localStorage.swapMinJPYC = nuko.swapMinJPYC;
        console.log(nuko.swapMinJPYC);
+     });
+     $("#swapMinUSDC").on("change", () => {
+       nuko.swapMinUSDC = parseFloat($("#swapMinUSDC").val());
+       localStorage.swapMinUSDC = nuko.swapMinUSDC;
+       console.log(nuko.swapMinUSDC);
      });
    }
  
@@ -1114,7 +1110,7 @@
        { date: [], rate: [] }
      );
  
-     let chart = chartYENJPYC;
+     let chart = chartJPYCUSDC;
      chart.data.labels = logQuick.date;
      chart.data.datasets[0].data = logQuick.rate;
      chart.data.datasets[1].data = logSushi.rate;
@@ -1311,7 +1307,7 @@
  
  // Area Chart Example
  var ctx = document.getElementById("myAreaChart");
- var chartYENJPYC = new Chart(ctx, {
+ var chartJPYCUSDC = new Chart(ctx, {
    type: "line",
    data: {
      labels: [],
@@ -1429,7 +1425,7 @@
  var chartCommunityBalance = new Chart(ctx, {
    type: "doughnut",
    data: {
-     labels: ["JPYC", "YEN"],
+     labels: ["USDC", "JPYC"],
      datasets: [
        {
          data: [55, 30],
@@ -1457,4 +1453,3 @@
      cutoutPercentage: 80,
    },
  });
- 
