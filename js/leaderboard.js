@@ -39,9 +39,9 @@ var nuko = {
 };
 
 const NODE_URL = [
-  //"wss://speedy-nodes-nyc.moralis.io/3e336936ccd6ec0af99dc191/polygon/mainnet/ws",
+  "wss://speedy-nodes-nyc.moralis.io/3e336936ccd6ec0af99dc191/polygon/mainnet/ws",
   "https://speedy-nodes-nyc.moralis.io/3e336936ccd6ec0af99dc191/polygon/mainnet",
-  //"https://polygon-rpc.com",
+  "https://polygon-rpc.com",
 ];
 
 const contractAddress = {
