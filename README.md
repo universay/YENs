@@ -23,7 +23,7 @@ see article on hide.ac [https://hide.ac/articles/ZZoaKG4yb](https://hide.ac/arti
 
 TXが実行されないエン。途中で止まるエン。
 
-だれか直してほしいエン。
+だれか直してほしいエン。[Twitter](https://twitter.com/babyunibabu)
 
 ![](img/txYEN.png)
 
