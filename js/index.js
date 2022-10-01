@@ -621,10 +621,8 @@ const getAllowance = async (contractAddress, routerAddress, button) => {
        .call()
        .then((values) => {
          // 0..matic 1..jpyc
-         //Math.floor((values[1] / (values[0] / 10 ** 12)) * Math.pow(10, 4)) /
          jpycPrice =
-         Math.floor((values[1] / (values[0] / 10 ** 12)) * Math.pow(10, 4)) /
-           Math.pow(10, 4);
+         Math.floor((values[1] / (values[0] / 10 ** 12)) * Math.pow(10, 4)) / Math.pow(10, 4);
          jpycPrice = jpycPrice * nuko.swapMaticAmount;
          rateReserveMatic = values[0] / 10 ** decimal["MATIC"];
          rateReserveJpyc = values[1] / 10 ** decimal["JPYC"];
@@ -637,12 +635,12 @@ const getAllowance = async (contractAddress, routerAddress, button) => {
      // goSwap
      let amountIn =
        Math.floor(jpycPrice * 10 ** decimal["JPYC"]) / 10 ** decimal["JPYC"];
-     amountIn = web3.utils.toWei(amountIn.toString());
-     //amountIn = web3.utils.toWei(amountIn.toString(), "mwei");
+     //amountIn = web3.utils.toWei(amountIn.toString());
+     amountIn = web3.utils.toWei(amountIn.toString(), "mwei");
      let amountOut =
        Math.floor(maticJpycMinAmout * 10 ** decimal["MATIC"]) /
        10 ** decimal["MATIC"];
-     amountOut = web3.utils.toWei(amountOut.toString());
+     amountOut = web3.utils.toWei(amountOut.toString(), "mwei");
  
      let gas =
        nukoZ.gas.price < nuko.swapGasMax ? nukoZ.gas.price : nuko.swapGasMax;
