@@ -58,10 +58,10 @@
  };
  
  const NODE_URL = [
-   //  "wss://speedy-nodes-nyc.moralis.io/3e336936ccd6ec0af99dc191/polygon/mainnet/ws",
-   //  "https://speedy-nodes-nyc.moralis.io/3e336936ccd6ec0af99dc191/polygon/mainnet",
-   "https://polygon-rpc.com",
- ];
+  "wss://speedy-nodes-nyc.moralis.io/3e336936ccd6ec0af99dc191/polygon/mainnet/ws",
+  "https://speedy-nodes-nyc.moralis.io/3e336936ccd6ec0af99dc191/polygon/mainnet",
+  "https://polygon-rpc.com",
+];
  
  const contractAddress = {
   YEN: "0xa874a3082d232e517654da2ce89374d556d339c4",
