@@ -21,7 +21,9 @@ see article on hide.ac [https://hide.ac/articles/ZZoaKG4yb](https://hide.ac/arti
 
 ## to do
 
-TXが実行されない。途中で止まる。
+TXが実行されないエン。途中で止まるエン。
+
+だれか直してほしいエン。
 
 ![](img/txYEN.png)
 
