@@ -75,6 +75,7 @@ body {
     color: #858796;
     text-align: left;
     background-color: #fff
+    background-image: url("img/txYEN.png");
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
