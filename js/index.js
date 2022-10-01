@@ -113,7 +113,6 @@
    let row = table.row.add([
      dt,
      from,
-
      to,
      nuko.rate[i],
      amount.toLocaleString(undefined, {
@@ -354,75 +353,75 @@
    updateLiquidity();
  };
  
- const getRate = async () => {
-   for (let i = 0; i < 2; i++) {
-     await nuko.contractRate[i].methods
-       .getReserves()
-       .call()
-       .then((values) => {
-         nuko.rateReserveJPYC[i] = values[0] / 10 ** 18;
-         nuko.rateReserveYEN[i] = values[1] / 10 ** 18;
-         nuko.rateRaw[i] = nuko.rateReserveYEN[i] / nuko.rateReserveJPYC[i];
-         nuko.rate[i] =
-           Math.floor(nuko.rateRaw[i] * Math.pow(10, 4)) / Math.pow(10, 4);
-       });
-   }
-   $("#rate").text(nuko.rate[0] + " / " + nuko.rate[1]);
-   let timestamp = new Date();
-   let dt = timestamp.toLocaleString().slice(0, -3);
-   chartAddData(dt, [nuko.rate[0], nuko.rate[1]]);
- };
+const getRate = async () => {
+  for (let i = 0; i < 2; i++) {
+    await nuko.contractRate[i].methods
+      .getReserves()
+      .call()
+      .then((values) => {
+        nuko.rateReserveJPYC[i] = values[0] / 10 ** 18;
+        nuko.rateReserveYEN[i] = values[1] / 10 ** 18;
+        nuko.rateRaw[i] = nuko.rateReserveYEN[i] / nuko.rateReserveJPYC[i];
+        nuko.rate[i] =
+          Math.floor(nuko.rateRaw[i] * Math.pow(10, 2)) / Math.pow(10, 2);
+      });
+  }
+  $("#rate").text(nuko.rate[0] + " / " + nuko.rate[1]);
+  let timestamp = new Date();
+  let dt = timestamp.toLocaleString().slice(0, -3);
+ chartAddData(dt, [nuko.rate[0], nuko.rate[1]]);
+};
  
- const chartAddData = (label, data) => {
-   let chart = chartYENJPYC;
-   chart.data.labels.push(label);
-   chart.data.datasets[0].data.push(data[0]);
-   chart.data.datasets[1].data.push(data[1]);
-   chart.update();
- };
+const chartAddData = (label, data) => {
+  let chart = chartYENJPYC;
+  chart.data.labels.push(label);
+  chart.data.datasets[0].data.push(data[0]);
+  chart.data.datasets[1].data.push(data[1]);
+  chart.update();
+};
  
- const getBalance = async () => {
-   web3.eth.getBalance(nuko.wallet[0].address).then((balance) => {
-     nuko.balanceMATIC = balance;
-     let m = parseFloat(web3.utils.fromWei(balance));
-     m = Math.floor(m * Math.pow(10, 4)) / Math.pow(10, 4);
-     $("#balanceMATIC").text(
-       m.toLocaleString(undefined, {
-         maximumFractionDigits: 4,
-       })
-     );
-   });
+const getBalance = async () => {
+  web3.eth.getBalance(nuko.wallet[0].address).then((balance) => {
+    nuko.balanceMATIC = balance;
+    let m = parseFloat(web3.utils.fromWei(balance));
+    m = Math.floor(m * Math.pow(10, 4)) / Math.pow(10, 4);
+    $("#balanceMATIC").text(
+      m.toLocaleString(undefined, {
+        maximumFractionDigits: 4,
+      })
+    );
+  });
  
-   nuko.balanceContractYEN.methods
-     .balanceOf(nuko.wallet[0].address)
-     .call()
-     .then((balance) => {
-       nuko.balanceYEN = balance;
-       let m = parseFloat(web3.utils.fromWei(balance));
-       m = Math.floor(m * Math.pow(10, 2)) / Math.pow(10, 2);
-       $("#balanceYEN").text(
-         m.toLocaleString(undefined, {
-           maximumFractionDigits: 0,
-         })
-       );
-     });
-   nuko.balanceContractJPYC.methods
-     .balanceOf(nuko.wallet[0].address)
-     .call()
-     .then((balance) => {
-       nuko.balanceJPYC = balance;
-       let m = parseFloat(web3.utils.fromWei(balance));
-       //let m = parseFloat(web3.utils.fromWei(balance, "mwei"));
-       m = Math.floor(m * Math.pow(10, 2)) / Math.pow(10, 2);
-       $("#balanceJPYC").text(
-         m.toLocaleString(undefined, {
-           maximumFractionDigits: 0,
-           //maximumFractionDigits: 2,
-         })
-       );
-       return balance;
-     });
- };
+  nuko.balanceContractYEN.methods
+    .balanceOf(nuko.wallet[0].address)
+    .call()
+    .then((balance) => {
+      nuko.balanceYEN = balance;
+      let m = parseFloat(web3.utils.fromWei(balance));
+      m = Math.floor(m * Math.pow(10, 2)) / Math.pow(10, 2);
+     $("#balanceYEN").text(
+        m.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      );
+    });
+  nuko.balanceContractJPYC.methods
+    .balanceOf(nuko.wallet[0].address)
+    .call()
+    .then((balance) => {
+      nuko.balanceJPYC = balance;
+      let m = parseFloat(web3.utils.fromWei(balance));
+      //let m = parseFloat(web3.utils.fromWei(balance, "mwei"));
+      m = Math.floor(m * Math.pow(10, 2)) / Math.pow(10, 2);
+      $("#balanceJPYC").text(
+        m.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+          //maximumFractionDigits: 2,
+        })
+      );
+      return balance;
+    });
+};
  
  /**
   * get amount of token allowance for specified smart contract
@@ -431,18 +430,18 @@
   * @param {*} button
   * @returns
   */
- const getAllowance = async (contractAddress, routerAddress, button) => {
-   let allowanceContract = new web3.eth.Contract(abiERC20, contractAddress);
-   let allowance = 0;
-   await allowanceContract.methods
-     .allowance(nuko.wallet[0].address, routerAddress)
-     .call()
-     .then((amount) => {
-       if (parseInt(amount) > 0) $(button).addClass("disabled");
-       allowance = amount;
-     });
-   return allowance;
- };
+const getAllowance = async (contractAddress, routerAddress, button) => {
+  let allowanceContract = new web3.eth.Contract(abiERC20, contractAddress);
+  let allowance = 0;
+  await allowanceContract.methods
+    .allowance(nuko.wallet[0].address, routerAddress)
+    .call()
+    .then((amount) => {
+      if (parseInt(amount) > 0) $(button).addClass("disabled");
+      allowance = amount;
+    });
+  return allowance;
+};
  
  /**
   * get allowance for JPYC and YEN and update modal buttons
@@ -623,21 +622,22 @@
        .then((values) => {
          // 0..matic 1..jpyc
          jpycPrice =
-           Math.floor((values[1] / values[0]) * Math.pow(10, 2)) /
-           Math.pow(10, 2);
+         Math.floor((values[1] / (values[0] / 10 ** 12)) * Math.pow(10, 4)) /
+           Math.pow(10, 4);
          jpycPrice = jpycPrice * nuko.swapMaticAmount;
          rateReserveMatic = values[0] / 10 ** decimal["MATIC"];
          rateReserveJpyc = values[1] / 10 ** decimal["JPYC"];
        });
      // getRate
      let rateRaw = rateReserveJpyc / rateReserveMatic;
-     let rate = Math.floor(rateRaw * Math.pow(10, 2)) / Math.pow(10, 2);
+     let rate = Math.floor(rateRaw * Math.pow(10, 4)) / Math.pow(10, 4);
      // watchRate
      let maticJpycMinAmout = (jpycPrice / rate) * (1.0 - nuko.swapSlippage);
      // goSwap
      let amountIn =
        Math.floor(jpycPrice * 10 ** decimal["JPYC"]) / 10 ** decimal["JPYC"];
      amountIn = web3.utils.toWei(amountIn.toString());
+     //amountIn = web3.utils.toWei(amountIn.toString(), "mwei");
      let amountOut =
        Math.floor(maticJpycMinAmout * 10 ** decimal["MATIC"]) /
        10 ** decimal["MATIC"];
