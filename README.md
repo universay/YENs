@@ -4,6 +4,7 @@ hosted on [https://universay.github.io/YENs/](https://universay.github.io/YENs/)
 
 ## [Yen Coin (YEN)](https://info.quickswap.exchange/#/token/0xa874a3082d232e517654da2ce89374d556d339c4)
 
+![](img/yens.png)
 
 ## JPYCstabilizer
 
@@ -17,7 +18,7 @@ see article on hide.ac [https://hide.ac/articles/ZZoaKG4yb](https://hide.ac/arti
 
 ## エンエン
 
-エンエンエンエン
+エンエンエンエンエン
 
 ## to do
 

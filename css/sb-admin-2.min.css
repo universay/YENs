@@ -74,7 +74,8 @@ body {
     line-height: 1.5;
     color: #858796;
     text-align: left;
-    background-color: #fff
+    background-color: rgb(255, 255, 255);
+    background-image: url(img/nukonuko.png);
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
