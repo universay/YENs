@@ -33,7 +33,7 @@
    swapMaxJPYC: 1000,
    swapMinJPYC: 10,
    swapSlippage: [0.006, 0.0075],
-   swapGasMax: 300,
+   swapGasMax: 300000,
    swapLog: [],
    swapMaxLog: 100,
    upperThreshold: 1.01,
@@ -109,7 +109,7 @@
    let timestamp = new Date();
    let dt = timestamp.toLocaleString();
    let gasEstimate =
-     "est. " + (((gas * nukoZ.gas.limit) / 1e9) * 0.5).toFixed(4);
+     "est. " + (((gas * nukoZ.gas.limit) / 1e9) * 1.0).toFixed(4);
    let row = table.row.add([
      dt,
      from,

@@ -14,7 +14,7 @@ export class NukoGas {
     list: null,
     pref: "fastest",
     interval: 15000,
-    limit: 300000,
+    limit: 3000000,
     labels: ["fastest", "faster", "fast", "standard", "safeLow"],
   };
 
