@@ -122,8 +122,7 @@
        maximumFractionDigits: 2,
      }),
      gasEstimate,
-     link,
-    // "",
+     "",
    ]);
    row.draw();
    table.column("0:visible").order("dsc").draw();
